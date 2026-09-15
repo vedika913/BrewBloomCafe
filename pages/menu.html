@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Coffee Menu</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+          
+</head>
+
+<body>
+
+{% include "header.html" %}
+
+
+<!-- HERO -->
+
+<section class="menu-hero">
+
+    <div class="overlay"></div>
+
+    <div class="hero-content">
+
+        <h1>ORDER <span>COFFEE</span></h1>
+
+        <p>Freshly Brewed Happiness Every Day ☕</p>
+
+    </div>
+
+</section>
+
+
+<!-- MENU -->
+
+<section class="menu-section">
+
+    <div class="menu-header">
+
+        <div>
+
+            <h2>Menu</h2>
+
+            <span>drinks</span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- CATEGORY -->
+
+    <div class="category-bar">
+
+        <button class="active">All Coffee</button>
+
+        <button>Cold Coffee</button>
+
+        <button>Espresso</button>
+
+        <button>Latte</button>
+
+        <button>Cappuccino</button>
+
+
+    </div>
+
+
+
+    <!-- CARDS -->
+
+    <div class="coffee-grid">
+
+        {% for coffee in coffees %}
+
+        <div class="coffee-card">
+
+            <div class="coffee-image">
+
+                {% if coffee.image %}
+
+                <img src="{{ url_for('static',
+                filename='images/' + coffee.image) }}">
+
+                {% else %}
+
+                <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=500">
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="coffee-info">
+
+                <h3>{{ coffee.name }}</h3>
+
+                <p>{{ coffee.category }}</p>
+
+                <div class="price-row">
+
+    <h4>₹{{ coffee.price }}</h4>
+
+    <a href="{{ url_for('order', id=coffee._id) }}" class="cart-btn"
+       title="Add to Cart">
+        🛒
+    </a>
+
+</div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+</section>
+
+
+
+{% include "footer.html" %}
+
+</body>
+
+</html>

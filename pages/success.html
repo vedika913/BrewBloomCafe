@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Successful</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+{% include "header.html" %}
+
+<div class="success-page">
+
+    <div class="success-box">
+
+        <div class="tick">✅</div>
+
+        <h1>Order Placed Successfully!</h1>
+
+        <p>
+            Thank you for ordering from our Coffee Shop.
+        </p>
+
+        <p>
+            Your delicious coffee is being prepared.
+        </p>
+
+        <a href="/orders" class="success-btn">
+            View My Orders
+        </a>
+
+        <a href="/menu" class="menu-btn">
+            Continue Shopping
+        </a>
+
+    </div>
+
+</div>
+
+{% include "footer.html" %}
+
+</body>
+</html>

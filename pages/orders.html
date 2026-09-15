@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Orders</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+{% include "header.html" %}
+
+<section class="orders-page">
+
+    <div class="orders-title">
+
+        <h1>☕ My Orders</h1>
+
+        <p>Track all your coffee orders here.</p>
+
+    </div>
+
+    {% if orders %}
+
+    <div class="orders-container">
+
+        {% for order in orders %}
+
+        <div class="order-card">
+
+            <div class="order-header">
+
+                <h2>{{ order.coffee_name }}</h2>
+
+                <span class="
+                {% if order.status == 'Completed' %}
+                completed
+                {% else %}
+                pending
+                {% endif %}
+                ">
+                    {{ order.status }}
+                </span>
+
+            </div>
+
+            <div class="order-details">
+
+                {% if order.order_id %}
+                <p><strong>Order ID :</strong> #{{ order.order_id }}</p>
+                {% endif %}
+
+                <p>
+                    <strong>Price :</strong>
+                    ₹{{ order.price }}
+                </p>
+
+                <p>
+                    <strong>Customer :</strong>
+                    {{ order.user_name }}
+                </p>
+
+                <p>
+                    <strong>Email :</strong>
+                    {{ order.user_email }}
+                </p>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="no-orders">
+
+        <i class="fas fa-mug-hot"></i>
+
+        <h2>No Orders Yet</h2>
+
+        <p>
+            Looks like you haven't ordered any coffee.
+        </p>
+
+        <a href="/menu" class="order-btn">
+
+            Order Coffee
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% include "footer.html" %}
+
+</body>
+
+</html>

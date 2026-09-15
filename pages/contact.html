@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Contact Us | Coffee Shop</title>
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+{% include "header.html" %}
+
+<!-- CONTACT BANNER -->
+
+<section class="contact-banner">
+
+<div class="banner-overlay">
+
+    <h1>Contact Us</h1>
+
+    <p>We'd Love To Hear From You ☕</p>
+
+</div>
+
+
+</section>
+<!-- CONTACT SECTION -->
+
+<section class="contact-section">
+
+
+    <!-- LEFT: CONTACT INFORMATION -->
+
+    <div class="contact-info">
+
+        <h2>Contact Us</h2>
+
+        <p>
+            <i class="fas fa-map-marker-alt"></i>
+            Kolhapur, Maharashtra, India
+        </p>
+
+        <p>
+            <i class="fas fa-envelope"></i>
+          brewandbloomcafe@gmail.com
+        </p>
+
+        <p>
+            <i class="fas fa-phone"></i>
+            +91 9876543210
+        </p>
+
+        <p>
+            <i class="fas fa-clock"></i>
+
+            <span>
+                Mon - Sun<br>
+                9:00 AM - 10:00 PM
+            </span>
+
+        </p>
+
+    </div>
+
+
+    <!-- MIDDLE: CONTACT FORM -->
+
+    <div class="contact-form">
+
+        <h2>Send Message</h2>
+
+        <form action="/contact" method="POST">
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                required
+            >
+
+            <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                required
+            >
+
+            <input
+                type="text"
+                name="phone"
+                placeholder="Phone Number"
+            >
+
+            <textarea
+                name="message"
+                placeholder="Write your message..."
+                required
+            ></textarea>
+
+            <button type="submit">
+                Send Message
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- RIGHT: MAP -->
+
+  <div class="contact-map">
+
+    <iframe
+        src="https://maps.google.com/maps?q=Kolhapur,Maharashtra&output=embed"
+        width="100%"
+        height="450"
+        style="border:0;"
+        loading="lazy"
+        allowfullscreen>
+    </iframe>
+
+</div>
+
+
+</section>
+
+<!-- SUCCESS POPUP -->
+
+{% if success %}
+
+<div id="successPopup" class="success-popup">
+
+<div class="success-box">
+
+    <div class="success-icon">
+        ✓
+    </div>
+
+    <h2>Message Sent!</h2>
+
+    <p>
+        Thank you for contacting us.<br>
+        We will get back to you soon.
+    </p>
+
+    <button type="button" onclick="closeSuccessPopup()">
+        OK
+    </button>
+
+</div>
+
+</div>
+
+{% endif %}
+
+{% include "footer.html" %}
+
+<script>
+
+function closeSuccessPopup() {
+
+    const popup = document.getElementById("successPopup");
+
+    if (popup) {
+        popup.style.display = "none";
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>

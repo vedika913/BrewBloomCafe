@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Coffee</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+{% include "header.html" %}
+
+<div class="admin-container">
+
+    <h1>☕ Add New Coffee</h1>
+
+    <form method="POST" class="coffee-form">
+
+        <label>Coffee Name</label>
+
+        <input type="text"
+               name="name"
+               placeholder="Enter coffee name"
+               required>
+
+
+        <label>Category</label>
+
+        <input type="text"
+               name="category"
+               placeholder="Example: Hot Coffee"
+               required>
+
+
+        <label>Price</label>
+
+        <input type="number"
+               name="price"
+               placeholder="Enter price"
+               min="1"
+               required>
+
+
+        <label>Image File Name</label>
+
+        <input type="text"
+               name="image"
+               placeholder="Example: cappuccino.jpg"
+               required>
+
+
+        <button type="submit" class="add-btn">
+            ☕ Add Coffee
+        </button>
+
+        <a href="/admin/coffees" class="cancel-btn">
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+{% include "footer.html" %}
+
+</body>
+
+</html>

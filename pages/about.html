@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Coffee Shop</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+{% include "header.html" %}
+
+<section class="about-banner">
+
+    <h1>About Coffee Shop ☕</h1>
+
+    <p>
+        Every cup tells a story. Fresh coffee, delicious snacks,
+        and unforgettable moments.
+    </p>
+
+</section>
+
+<section class="about-container">
+
+    <div class="about-image">
+
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800" alt="Coffee Shop">
+
+    </div>
+
+    <div class="about-content">
+
+        <h2>Who We Are</h2>
+
+        <p>
+            Coffee Shop is a place where coffee lovers meet.
+            We prepare premium coffee using carefully selected beans from
+            around the world. Our cafe offers a cozy atmosphere where you
+            can relax, study, work, or spend quality time with friends.
+        </p>
+
+        <p>
+            Our mission is to provide fresh coffee, excellent customer
+            service, and a memorable experience for every customer who
+            visits us.
+        </p>
+
+        <a href="/menu">
+            <button class="about-btn">Explore Our Menu</button>
+        </a>
+
+    </div>
+
+</section>
+
+<section class="about-container">
+
+    <div class="about-image">
+ <img src="{{ url_for('static', filename='images/shopphoto.jpg') }}" alt="shopphoto">    </div>
+
+    <div class="about-content">
+
+        <h2>Life Begins After Coffee ☕</h2>
+
+        <p>
+            Experience a warm and cozy coffee shop where every cup is brewed with passion and every visit feels like home.
+        </p>
+
+        <ul class="features">
+            <li>☕ Freshly Brewed Coffee</li>
+            <li>🎵 Soft Relaxing Music</li>
+            <li>🛋 Comfortable Seating</li>
+            <li>📚 Peaceful Reading Corner</li>
+            <li>💻 Perfect for Work & Study</li>
+            <li>🌿 Cozy Modern Interior</li>
+            <li>📸 Instagram-worthy Decor</li>
+        </ul>
+
+    </div>
+
+</section>
+
+</section>
+
+<section class="features">
+
+    <h2>Why Choose Us?</h2>
+
+    <div class="feature-container">
+
+        <div class="feature-card">
+            <h3>☕ Premium Coffee</h3>
+            <p>Freshly brewed coffee made from premium quality beans.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>🚚 Fast Service</h3>
+            <p>Quick ordering and friendly customer service.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>❤️ Cozy Environment</h3>
+            <p>Perfect place for work, meetings and relaxing.</p>
+        </div>
+
+    </div>
+
+</section>
+
+{% include "footer.html" %}
+
+</body>
+</html>

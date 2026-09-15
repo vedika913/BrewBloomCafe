@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Cart | Brew & Bloom Cafe</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body class="cart-body">
+
+    {% include 'header.html' %}
+
+
+    <!-- CART PAGE -->
+
+    <main class="cart-page">
+
+        <div class="cart-header">
+
+            <h1>
+                🛒 My Cart
+            </h1>
+
+            <p>
+                Review your selected coffee before checkout.
+            </p>
+
+        </div>
+
+
+        {% if cart_items %}
+
+        <!-- CART TABLE -->
+
+        <div class="cart-table-wrapper">
+
+            <table class="cart-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>No.</th>
+                        <th>Coffee</th>
+                        <th>Price</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in cart_items %}
+
+                    <tr>
+
+                        <td>
+                            {{ loop.index }}
+                        </td>
+
+                        <td class="coffee-name">
+                            ☕ {{ item.coffee_name }}
+                        </td>
+
+                        <td class="coffee-price">
+                            ₹{{ item.price }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- CART TOTAL -->
+
+        <div class="cart-bottom">
+
+            <div class="cart-total">
+
+                <span>Total Amount</span>
+
+                <strong>
+                    ₹{{ total }}
+                </strong>
+
+            </div>
+
+
+            <a href="/checkout" class="checkout-btn">
+                Proceed to Checkout
+            </a>
+
+        </div>
+
+
+        {% else %}
+
+        <!-- EMPTY CART -->
+
+        <div class="empty-cart">
+
+            <div class="empty-cart-icon">
+                🛒
+            </div>
+
+            <h2>
+                Your cart is empty
+            </h2>
+
+            <p>
+                Looks like you haven't added any coffee yet.
+            </p>
+
+            <a href="/menu" class="browse-btn">
+                Our Menu
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </main>
+
+
+    {% include 'footer.html' %}
+
+
+</body>
+
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Customer Orders</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+{% include "header.html" %}
+
+<section class="admin-orders">
+
+    <h1>☕ Customer Orders</h1>
+
+    <table class="order-table">
+
+        <thead>
+
+        <tr>
+
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Email</th>
+            <th>Coffee</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Update Status</th>
+            <th>Delete</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for order in orders %}
+
+        <tr>
+
+            <td>#{{ loop.index }}</td>
+
+            <td>{{ order.user_name }}</td>
+
+            <td>{{ order.user_email }}</td>
+
+            <td>{{ order.coffee_name }}</td>
+
+            <td>₹{{ order.price }}</td>
+
+            <td>
+
+                {% if order.status=="Order Placed" %}
+                    <span class="status placed">🟡 Order Placed</span>
+
+                {% elif order.status=="Preparing" %}
+                    <span class="status preparing">☕ Preparing</span>
+
+                {% elif order.status=="Out for Delivery" %}
+                    <span class="status delivery">🚚 Out for Delivery</span>
+
+                {% elif order.status=="Delivered" %}
+                    <span class="status delivered">✅ Delivered</span>
+
+                {% endif %}
+
+            </td>
+
+            <td>
+
+                <a href="/update-status/{{ order._id }}/Preparing">
+                    <button class="prepare-btn">Preparing</button>
+                </a>
+
+                <a href="/update-status/{{ order._id }}/Out for Delivery">
+                    <button class="delivery-btn">Delivery</button>
+                </a>
+
+                <a href="/update-status/{{ order._id }}/Delivered">
+                    <button class="complete-btn">Delivered</button>
+                </a>
+
+            </td>
+
+            <td>
+
+                <a href="/delete-order/{{ order._id }}">
+                    <button class="delete-btn">Delete</button>
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</section>
+
+{% include "footer.html" %}
+
+</body>
+</html>

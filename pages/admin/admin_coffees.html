@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Admin Panel</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+{% include "header.html" %}
+
+<div class="admin-container">
+
+    <h1>☕ Coffee Management</h1>
+
+    <a href="/addcoffee">
+        <button class="add-btn">+ Add Coffee</button>
+    </a>
+
+    <table>
+
+        <tr>
+
+            <th>Image</th>
+
+            <th>Name</th>
+
+            <th>Category</th>
+
+            <th>Price</th>
+
+            <th>Action</th>
+
+        </tr>
+
+        {% for coffee in coffees %}
+
+        <tr>
+
+            <td>
+
+                <img src="{{ url_for('static', filename='images/' + coffee.image) }}">
+
+            </td>
+
+            <td>{{ coffee.name }}</td>
+
+            <td>{{ coffee.category }}</td>
+
+            <td>₹{{ coffee.price }}</td>
+
+            <td>
+
+                <a href="/editcoffee/{{ coffee._id }}">
+                    <button>Edit</button>
+                </a>
+
+                <a href="/deletecoffee/{{ coffee._id }}">
+                    <button class="delete-btn">Delete</button>
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+{% include "footer.html" %}
+
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Users</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+{% include "header.html" %}
+
+<div class="admin-page">
+
+    <h1>Registered Users</h1>
+
+    <table class="admin-table">
+
+        <tr>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Action</th>
+        </tr>
+
+        {% for user in users %}
+
+        <tr>
+
+            <td>{{ loop.index }}</td>
+
+            <td>{{ user.name }}</td>
+
+            <td>{{ user.email }}</td>
+
+            <td>{{ user.mobile }}</td>
+
+            <td>
+
+                <a href="/admin/user/{{ user._id }}">
+                    <button class="view-btn">View</button>
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+{% include "footer.html" %}
+
+</body>
+
+</html>

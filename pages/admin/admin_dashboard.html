@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Dashboard</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="admin-wrapper">
+
+    <!-- Sidebar -->
+
+    <aside class="admin-sidebar">
+
+        <div class="admin-logo">
+
+            <i class="fas fa-mug-hot"></i>
+
+            <h2>☕ Brew & Bloom Cafe</h2>
+
+            <p>Admin Panel</p>
+
+        </div>
+
+        <ul>
+
+            <li class="active">
+                <a href="/admin">
+                    <i class="fas fa-home"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="/admin/coffees">
+                    <i class="fas fa-coffee"></i>
+                    Coffee Management
+                </a>
+            </li>
+
+            <li>
+                <a href="/admin/users">
+                    <i class="fas fa-users"></i>
+                    Customers
+                </a>
+            </li>
+
+            <li>
+                <a href="/admin/orders">
+                    <i class="fas fa-box"></i>
+                    Orders
+                </a>
+            </li>
+
+       <li class="new-counter-order">
+    <a href="/admin/new-order">
+        <i class="fa-solid fa-plus"></i>
+        New Counter Order
+    </a>
+</li>
+
+            <li>
+                <a href="/admin/messages">
+                    <i class="fas fa-envelope"></i>
+                    Messages
+                </a>
+            </li>
+
+            <li>
+                <a href="/">
+                    <i class="fas fa-globe"></i>
+                    Visit Website
+                </a>
+            </li>
+
+        </ul>
+
+        <a href="/logout" class="logout-btn">
+            Logout
+        </a>
+
+    </aside>
+
+
+    <!-- Main Content -->
+
+    <main class="admin-content">
+
+        <div class="admin-top">
+
+            <div>
+
+                <h1>Welcome Admin 👋</h1>
+
+                <p>Manage your Coffee Shop easily.</p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Statistics -->
+
+        <div class="admin-cards">
+
+            <div class="admin-card">
+
+                <i class="fas fa-users"></i>
+
+                <h2>{{ total_users }}</h2>
+
+                <p>Total Customers</p>
+
+            </div>
+
+            <div class="admin-card">
+
+                <i class="fas fa-mug-hot"></i>
+
+                <h2>{{ total_coffees }}</h2>
+
+                <p>Total Coffees</p>
+
+            </div>
+
+            <div class="admin-card">
+
+                <i class="fas fa-shopping-cart"></i>
+
+                <h2>{{ total_orders }}</h2>
+
+                <p>Total Orders</p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Quick Actions -->
+
+        <div class="quick-actions">
+
+            <a href="/admin/coffees" class="action-box">
+
+                <i class="fas fa-plus-circle"></i>
+
+                <h3>Add Coffee</h3>
+
+            </a>
+
+            <a href="/admin/users" class="action-box">
+
+                <i class="fas fa-users"></i>
+
+                <h3>Manage Users</h3>
+
+            </a>
+
+            <a href="/admin/orders" class="action-box">
+
+                <i class="fas fa-box"></i>
+
+                <h3>Manage Orders</h3>
+
+            </a>
+
+            <a href="/admin/messages" class="action-box">
+
+                <i class="fas fa-envelope"></i>
+
+                <h3>Customer Messages</h3>
+
+            </a>
+
+        </div>
+
+
+        <!-- Recent Orders -->
+
+        <div class="table-box">
+
+            <h2>Recent Orders</h2>
+
+            <table>
+
+                <tr>
+
+                    <th>Customer</th>
+
+                    <th>Coffee</th>
+
+                    <th>Price</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+                {% for order in recent_orders %}
+
+                <tr>
+
+                    <td>{{ order.user_name }}</td>
+
+                    <td>{{ order.coffee_name }}</td>
+
+                    <td>₹{{ order.price }}</td>
+
+                    <td>{{ order.status }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

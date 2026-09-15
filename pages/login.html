@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body class="login-page">
+
+<div class="overlay">
+
+<div class="form-box">
+
+<h1>Brew & Bloom Cafe</h1>
+
+
+
+<h2>Login</h2>
+
+<form action="/login" method="POST">
+
+<div class="input-box">
+
+<i class="fa-solid fa-envelope"></i>
+
+<input
+type="email"
+name="email"
+placeholder="Email"
+required>
+
+</div>
+
+<div class="password-box">
+
+    <i class="fa-solid fa-lock"></i>
+
+    <input
+        type="password"
+        id="loginPassword"
+        name="password"
+        placeholder="Password"
+        required
+    >
+
+    <button
+        type="button"
+        class="show-password"
+        onclick="togglePassword('loginPassword', this)"
+    >
+        <i class="fa-solid fa-eye"></i>
+    </button>
+
+</div>
+
+<button type="submit" class="login-btn"> Login </button>
+
+</form>
+
+<p>
+
+Don't have an account?
+
+<a href="/register">
+
+Register
+
+</a>
+
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+function togglePassword(inputId, button) {
+
+    const password = document.getElementById(inputId);
+    const icon = button.querySelector("i");
+
+    if (password.type === "password") {
+
+        password.type = "text";
+
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+
+    } else {
+
+        password.type = "password";
+
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>

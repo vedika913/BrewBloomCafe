@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | Brew & Bloom Cafe</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+
+<body class="checkout-body">
+
+{% include "header.html" %}
+
+
+<!-- =====================================================
+     CHECKOUT PAGE
+===================================================== -->
+
+<main class="checkout-page">
+
+
+    <!-- PAGE TITLE -->
+
+    <div class="checkout-title">
+
+        <span class="checkout-icon">
+            <i class="fa-solid fa-mug-hot"></i>
+        </span>
+
+        <div>
+            <h1>Checkout</h1>
+
+            <p>
+                Complete your order and enjoy your coffee.
+            </p>
+        </div>
+
+    </div>
+
+
+
+    <!-- CHECKOUT CONTAINER -->
+
+    <div class="checkout-container">
+
+
+        <!-- =================================================
+             BILLING DETAILS
+        ================================================== -->
+
+        <div class="billing">
+
+            <div class="section-title">
+
+                <div class="section-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+
+                <div>
+                    <h2>Billing Details</h2>
+
+                    <p>
+                        Enter your delivery information
+                    </p>
+                </div>
+
+            </div>
+
+
+            <form action="/place-order" method="POST">
+
+
+                <!-- FULL NAME -->
+
+                <div class="checkout-input">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Full Name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="checkout-input">
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email Address"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- MOBILE -->
+
+                <div class="checkout-input">
+
+                    <i class="fa-solid fa-phone"></i>
+
+                    <input
+                        type="text"
+                        name="mobile"
+                        placeholder="Mobile Number"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ADDRESS -->
+
+                <div class="checkout-textarea">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    <textarea
+                        name="address"
+                        placeholder="Delivery Address"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- CITY + PINCODE -->
+
+                <div class="checkout-row">
+
+
+                    <div class="checkout-input">
+
+                        <i class="fa-solid fa-city"></i>
+
+                        <input
+                            type="text"
+                            name="city"
+                            placeholder="City"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="checkout-input">
+
+                        <i class="fa-solid fa-location-crosshairs"></i>
+
+                        <input
+                            type="text"
+                            name="pincode"
+                            placeholder="Pincode"
+                            required
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- PAYMENT -->
+
+                <div class="payment-box">
+
+                    <label>
+                        <i class="fa-solid fa-credit-card"></i>
+                        Payment Method
+                    </label>
+
+
+                    <select name="payment_method">
+
+                        <option value="Cash on Delivery">
+                            Cash on Delivery
+                        </option>
+
+                        <option value="UPI">
+                            UPI / PhonePe Payment
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- PLACE ORDER -->
+
+                <button
+                    type="submit"
+                    class="btn-order">
+
+                    <i class="fa-solid fa-bag-shopping"></i>
+
+                    Place Order
+
+                </button>
+
+
+            </form>
+
+        </div>
+
+
+
+        <!-- =================================================
+             ORDER SUMMARY
+        ================================================== -->
+
+        <aside class="order-summary">
+
+
+            <div class="summary-header">
+
+                <div class="summary-icon">
+
+                    <i class="fa-solid fa-receipt"></i>
+
+                </div>
+
+                <div>
+
+                    <h2>Order Summary</h2>
+
+                    <p>
+                        Your selected items
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ORDER ITEMS -->
+
+            <div class="summary-items">
+
+
+                {% for item in cart_items %}
+
+                <div class="summary-item">
+
+
+                    <div class="item-info">
+
+                        <span class="coffee-cup">
+                            ☕
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                {{ item.coffee_name }}
+                            </strong>
+
+                            <small>
+                                Brew & Bloom Cafe
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <span class="item-price">
+
+                        ₹{{ item.price }}
+
+                    </span>
+
+
+                </div>
+
+                {% endfor %}
+
+
+            </div>
+
+
+
+            <!-- SUMMARY DIVIDER -->
+
+            <div class="summary-divider"></div>
+
+
+
+            <!-- TOTAL -->
+
+            <div class="summary-total">
+
+                <span>
+                    Total Amount
+                </span>
+
+                <strong>
+                    ₹{{ total }}
+                </strong>
+
+            </div>
+
+
+
+            <!-- SECURITY NOTE -->
+
+            <div class="secure-payment">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                <span>
+                    Your order details are secure
+                </span>
+
+            </div>
+
+
+        </aside>
+
+
+    </div>
+
+</main>
+
+
+{% include "footer.html" %}
+
+
+</body>
+
+</html>

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Coffee Shop</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+     {% include "header.html" %}
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-left">
+
+        <h1>
+            Coffee <br>
+            <span>The Best For You</span>
+        </h1>
+
+        <p>
+            Start your day with freshly brewed coffee made from premium beans.
+            Experience rich aroma, smooth taste and unforgettable moments.
+        </p>
+
+        <a href="/menu" class="hero-btn">
+            View Menu
+        </a>
+
+    </div>
+
+    <div class="hero-right">
+
+        <img src="{{ url_for('static', filename='images/shopphoto1.webp') }}">
+
+    </div>
+
+</section>
+
+<!-- FEATURED -->
+
+<section class="featured">
+
+<h2>Featured Coffee</h2>
+
+<div class="coffee-container">
+
+{% for coffee in coffees[:3] %}
+
+<div class="coffee-card">
+
+<img src="{{ url_for('static', filename='images/' + coffee.image) }}">
+
+<h3>{{ coffee.name }}</h3>
+
+<p>₹{{ coffee.price }}</p>
+
+<a href="/order/{{ coffee._id }}" class="card-btn">
+Add To Cart
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section class="about-home">
+
+<div class="about-text">
+
+<h2>Discover the Best Coffee</h2>
+
+<p>
+
+Our coffee is prepared using premium roasted beans,
+fresh milk and experienced baristas.
+
+Every cup is made with love and passion.
+
+</p>
+
+<a href="/about" class="learn-btn">
+
+Learn More
+
+</a>
+
+</div>
+
+<div class="about-image">
+
+<img src="{{ url_for('static', filename='images/shopphoto.jpg') }}">
+
+</div>
+
+</section>
+
+<!-- SERVICES -->
+
+<section class="services">
+
+<div class="service">
+
+☕
+
+<h3>Premium Coffee</h3>
+
+</div>
+
+<div class="service">
+
+🚚
+
+<h3>Fast Delivery</h3>
+
+</div>
+
+<div class="service">
+
+🌱
+
+<h3>Fresh Beans</h3>
+
+</div>
+
+<div class="service">
+
+⭐
+
+<h3>Best Taste</h3>
+
+</div>
+
+</section>
+
+{% include "footer.html" %}
+    </body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>New Order | Brew & Bloom Cafe</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+{% include "header.html" %}
+
+
+<div class="counter-order-page">
+
+    <h1>
+        <i class="fa-solid fa-mug-hot"></i>
+        New Counter Order
+    </h1>
+
+    <p class="page-subtitle">
+        Create an order for a customer at the cafe.
+    </p>
+
+
+    <div class="counter-order-card">
+
+        <form action="/admin/new-order" method="POST">
+
+
+            <!-- CUSTOMER NAME -->
+
+            <label>
+                Customer Name
+            </label>
+
+            <input
+                type="text"
+                name="customer_name"
+                placeholder="Enter customer name"
+                required
+            >
+
+
+            <!-- ORDER TYPE -->
+
+            <label>
+                Order Type
+            </label>
+
+            <select
+                name="order_type"
+                id="orderType"
+                onchange="toggleTable()"
+                required
+            >
+
+                <option value="Dine-in">
+                    Dine-in
+                </option>
+
+                <option value="Takeaway">
+                    Takeaway
+                </option>
+
+            </select>
+
+
+            <!-- TABLE -->
+
+            <div id="tableBox">
+
+                <label>
+                    Table Number
+                </label>
+
+                <input
+                    type="text"
+                    name="table_number"
+                    placeholder="Example: 5"
+                >
+
+            </div>
+
+
+            <!-- COFFEE -->
+
+            <label>
+                Select Coffee
+            </label>
+
+            <select
+                name="coffee_id"
+                required
+            >
+
+                <option value="">
+                    Select Coffee
+                </option>
+
+                {% for coffee in coffees %}
+
+                <option value="{{ coffee._id }}">
+
+                    {{ coffee.name }}
+                    - ₹{{ coffee.price }}
+
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <!-- QUANTITY -->
+
+            <label>
+                Quantity
+            </label>
+
+            <input
+                type="number"
+                name="quantity"
+                min="1"
+                value="1"
+                required
+            >
+
+
+            <!-- PAYMENT -->
+
+            <label>
+                Payment Method
+            </label>
+
+            <select
+                name="payment_method"
+                required
+            >
+
+                <option value="Cash">
+                    Cash
+                </option>
+
+                <option value="UPI">
+                    UPI / PhonePe
+                </option>
+
+                <option value="Card">
+                    Card
+                </option>
+
+            </select>
+
+
+            <!-- BUTTON -->
+
+            <button
+                type="submit"
+                class="counter-order-btn">
+
+                <i class="fa-solid fa-check"></i>
+
+                Place Counter Order
+
+            </button>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function toggleTable() {
+
+    const orderType =
+        document.getElementById("orderType").value;
+
+    const tableBox =
+        document.getElementById("tableBox");
+
+    if (orderType === "Dine-in") {
+
+        tableBox.style.display = "block";
+
+    } else {
+
+        tableBox.style.display = "none";
+
+    }
+
+}
+
+</script>
+
+
+{% include "footer.html" %}
+
+</body>
+
+</html>
