@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Bills | Brew & Bloom Cafe</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Font Awesome icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    {% include "header.html" %}
+
+    <main class="content">
+        <div class="my-bills-container">
+
+            <!-- Page heading -->
+            <div class="my-bills-header">
+                <h1><i class="fas fa-file-invoice-dollar"></i> My Bills</h1>
+                <p>View your previous orders and print your bills.</p>
+            </div>
+
+            <!-- Bills list -->
+            {% if orders %}
+                <div class="bills-list">
+
+                    {% for order in orders %}
+                        <div class="bill-card">
+
+                            <h3>
+                                <i class="fas fa-receipt"></i>
+                                Bill #{{ order.get('bill_number', 'Not available') }}
+                            </h3>
+
+                            <p>
+                                <strong><i class="fas fa-calendar-alt"></i> Date:</strong>
+                                {% if order.get('created_at') %}
+                                    {{ order.created_at.strftime('%d-%m-%Y %I:%M %p') }}
+                                {% else %}
+                                    Not recorded
+                                {% endif %}
+                            </p>
+
+                            <p>
+                                <strong><i class="fas fa-coffee"></i> Items:</strong>
+                                {{ order.get('coffee_name', 'Coffee order') }}
+                            </p>
+
+                            {% if order.get('quantity') %}
+                                <p>
+                                    <strong>Quantity:</strong>
+                                    {{ order.get('quantity') }}
+                                </p>
+                            {% endif %}
+
+                            <p>
+                                <strong><i class="fas fa-credit-card"></i> Payment:</strong>
+                                {{ order.get('payment_method', 'Not specified') }}
+                            </p>
+
+                            <p>
+                                <strong>Status:</strong>
+                                <span class="bill-status">
+                                    {{ order.get('status', 'Pending') }}
+                                </span>
+                            </p>
+
+                            <p class="bill-amount">
+                                ₹{{ "%.2f"|format(order.get('price', 0)|float) }}
+                            </p>
+
+                            <a class="view-bill-btn"
+                               href="{{ url_for('view_bill', order_id=order._id) }}">
+                                <i class="fas fa-print"></i>
+                                View / Print Bill
+                            </a>
+
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <!-- Empty state -->
+                <div class="no-bills">
+                    <i class="fas fa-file-invoice"
+                       style="font-size: 45px; color: #795548;"></i>
+
+                    <h3>No Bills Yet</h3>
+                    <p>Your orders and bills will appear here after you place an order.</p>
+
+                    <a href="/menu">
+                        <i class="fas fa-mug-hot"></i>
+                        Explore Coffee Menu
+                    </a>
+                </div>
+
+            {% endif %}
+
+        </div>
+    </main>
+
+</body>
+</html>

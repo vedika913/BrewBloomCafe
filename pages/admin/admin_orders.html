@@ -35,7 +35,7 @@
             <th>Status</th>
             <th>Update Status</th>
             <th>Delete</th>
-
+            <th>View Bill</th>
         </tr>
 
         </thead>
@@ -98,6 +98,13 @@
 
             </td>
 
+            <td>
+    <a href="{{ url_for('view_bill', order_id=order._id) }}"
+       class="view-btn"
+       target="_blank">
+        🧾 View Bill
+    </a>
+</td>
         </tr>
 
         {% endfor %}

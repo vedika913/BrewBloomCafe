@@ -13,57 +13,81 @@ href="{{ url_for('static', filename='style.css') }}"></head>
  <div class="dashboard">
 
     <!-- Sidebar -->
-    <aside class="sidebar">
 
-        <div class="logo">
-            <i class="fas fa-mug-hot"></i>
-            <h2>☕ Brew & Bloom Cafe</h2>
-        </div>
+<aside class="sidebar">
 
-        <ul>
+    <div class="sidebar-brand">
+        <h2>☕ Brew &amp; Bloom Cafe</h2>
+    </div>
 
-            <li class="active">
-                <a href="/dashboard">
-                    <i class="fas fa-home"></i> Dashboard
-                </a>
-            </li>
+    <ul class="sidebar-menu">
 
-            <li>
-                <a href="/menu">
-                    <i class="fas fa-coffee"></i> Coffee Menu
-                </a>
-            </li>
+        <li class="active">
+            <a href="/dashboard">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
 
-            <li>
-                <a href="/cart">
-                    <i class="fas fa-shopping-cart"></i> My Cart
-                </a>
-            </li>
+        <li>
+            <a href="/menu">
+                <i class="fas fa-coffee"></i>
+                <span>Coffee Menu</span>
+            </a>
+        </li>
 
-            <li>
-                <a href="/checkout">
-                    <i class="fas fa-credit-card"></i> Checkout
-                </a>
-            </li>
+        <li>
+            <a href="/cart">
+                <i class="fas fa-shopping-cart"></i>
+                <span>My Cart</span>
+            </a>
+        </li>
 
-            <li>
-                <a href="/orders">
-                    <i class="fas fa-box"></i> My Orders
-                </a>
-            </li>
+        <li>
+            <a href="/checkout">
+                <i class="fas fa-credit-card"></i>
+                <span>Checkout</span>
+            </a>
+        </li>
 
-            <li>
-                <a href="/contact">
-                    <i class="fas fa-envelope"></i> Send Message
-                 </a>
-            </li>
+        <li>
+            <a href="/orders">
+                <i class="fas fa-box"></i>
+                <span>My Orders</span>
+            </a>
+        </li>
 
-        </ul>
+        <li>
+            <a href="/my-bills">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span>My Bills</span>
+            </a>
+        </li>
 
-        <a href="/logout" class="logout-btn">
-            <i class="fas fa-sign-out-alt"></i>
-            Logout
-        </a>
+        <li>
+            <a href="/contact">
+                <i class="fas fa-envelope"></i>
+                <span>Send Message</span>
+            </a>
+        </li>
+  <li>
+    <a href="{{ url_for('profile') }}">
+        <i class="fas fa-user-circle"></i>
+        <span>My Profile</span>
+    </a>
+</li>
+    </ul>
+
+
+  
+
+    <a href="/logout" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+    </a>
+
+</aside>
+
 
     </aside>
 
@@ -106,7 +130,7 @@ href="{{ url_for('static', filename='style.css') }}"></head>
     <div class="card">
 
         <div class="card-icon">
-            <img src="{{ url_for('static', filename='images/photo.jpg') }}">
+            <img src="{{ url_for('static', filename='images/coffeemenu.jpg') }}">
         </div>
 
         <div class="card-content">

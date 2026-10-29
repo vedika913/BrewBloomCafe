@@ -1,10 +1,12 @@
 <nav>
 
-<h2>
-    <a href="/" class="shop-logo-link">
-        ☕ Brew & Bloom Cafe
-    </a>
-</h2>
+    <h2>
+        <a href="{% if session.get('role') == 'admin' %}/admin{% elif session.get('user') %}/dashboard{% else %}/{% endif %}"
+           class="shop-logo-link">
+            ☕ Brew & Bloom Cafe
+        </a>
+    </h2>
+
     <ul>
 
         <li class="{{ 'active' if active_page == 'home' else '' }}">
@@ -23,26 +25,31 @@
             <a href="/contact">Contact</a>
         </li>
 
-     
-            {% if session.get("user") %}
+        {% if session.get("user") %}
 
-                {% if session.get("role") == "admin" %}
-                    <li><a href="/admin">Dashboard</a></li>
-                {% else %}
-                    <li><a href="/dashboard">Dashboard</a></li>
-                {% endif %}
-
-                <li><a href="/logout">Logout</a></li>
-
+            {% if session.get("role") == "admin" %}
+                <li>
+                    <a href="/admin">Dashboard</a>
+                </li>
             {% else %}
+                <li>
+                    <a href="/dashboard">Dashboard</a>
+                </li>
+            {% endif %}
 
-        <li class="{{ 'active' if active_page == 'login' else '' }}">
-            <a href="/login">Login</a>
-        </li>
+            <li>
+                <a href="/logout">Logout</a>
+            </li>
 
-        <li class="{{ 'active' if active_page == 'register' else '' }}">
-            <a href="/register">Register</a>
-        </li>
+        {% else %}
+
+            <li class="{{ 'active' if active_page == 'login' else '' }}">
+                <a href="/login">Login</a>
+            </li>
+
+            <li class="{{ 'active' if active_page == 'register' else '' }}">
+                <a href="/register">Register</a>
+            </li>
 
         {% endif %}
 

@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe Bill - Brew & Bloom Cafe</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="bill-container">
+
+    <div class="bill-header">
+        <h1>☕ Brew &amp; Bloom Cafe</h1>
+        <p>Thank you for choosing us!</p>
+        <h2>ORDER BILL</h2>
+    </div>
+
+    <div class="bill-info">
+       <p><strong>Bill Number:</strong> 
+        {{ bill_number }}</p>
+
+        <p>
+            <strong>Customer:</strong>
+            {{ order.get("customer_name",
+                         order.get("user_name", "Customer")) }}
+        </p>
+
+        <p>
+            <strong>Email:</strong>
+            {{ order.get("user_email", "N/A")
+               if order.get("user_email") not in
+               ["Counter", "Counter Customer"]
+               else "Counter Order" }}
+        </p>
+
+        <p>
+            <strong>Order Type:</strong>
+            {{ order.get("order_type", "Online") }}
+        </p>
+
+        {% if order.get("table_number") %}
+        <p>
+            <strong>Table Number:</strong>
+            {{ order.get("table_number") }}
+        </p>
+        {% endif %}
+
+        <p>
+            <strong>Payment Method:</strong>
+            {{ order.get("payment_method", "Not recorded") }}
+        </p>
+
+   <p>
+    <strong>Order Date:</strong>
+    {% if order_date %}
+        {{ order_date.strftime("%d-%m-%Y %I:%M %p") }}
+    {% else %}
+        Not recorded
+    {% endif %}
+</p>
+    </div>
+
+    <table class="bill-table">
+        <thead>
+            <tr>
+                <th>Coffee</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>{{ order.get("coffee_name", "Coffee") }}</td>
+                <td>{{ order.get("quantity", 1) }}</td>
+                <td>₹{{ "%.2f"|format(order.get("price", 0)|float) }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="bill-total">
+        <span>Total Amount</span>
+        <span>₹{{ "%.2f"|format(order.get("price", 0)|float) }}</span>
+    </div>
+
+    <div class="thank-you">
+        <h3>Thank you! Visit us again ❤️</h3>
+    </div>
+
+    <div class="bill-actions">
+        <button onclick="window.print()">
+            🖨️ Print / Save as PDF
+        </button>
+
+        <a href="/admin/orders" class="back-btn">
+            Back to Orders
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>

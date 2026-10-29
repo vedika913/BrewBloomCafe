@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | Brew & Bloom Cafe</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body class="profile-page">
+
+    {% include "header.html" %}
+
+    <main class="profile-container">
+
+        <div class="profile-heading">
+            <h1><i class="fas fa-user-circle"></i> My Profile</h1>
+            <p>Manage your personal information and delivery details.</p>
+        </div>
+
+        <section class="profile-card">
+
+            <div class="profile-top">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+
+                <div class="profile-identity">
+                    <h2>{{ customer.get('name', 'Customer') }}</h2>
+                    <p>
+                        @{{ customer.get('username', customer.get('name', 'customer')|lower|replace(' ', '')) }}
+                    </p>
+                    <span class="customer-badge">
+                        <i class="fas fa-coffee"></i> Cafe Customer
+                    </span>
+                </div>
+            </div>
+
+            {% if message %}
+                <div class="profile-message">
+                    <i class="fas fa-check-circle"></i> {{ message }}
+                </div>
+            {% endif %}
+
+            {% if error %}
+                <div class="profile-error">
+                    <i class="fas fa-exclamation-circle"></i> {{ error }}
+                </div>
+            {% endif %}
+
+            <form action="{{ url_for('profile') }}" method="POST">
+
+                <div class="profile-form-grid">
+
+                    <div class="profile-field">
+                        <label for="name">Full Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value="{{ customer.get('name', '') }}"
+                            placeholder="Enter your full name"
+                            maxlength="80"
+                            required>
+                    </div>
+
+                    <div class="profile-field">
+                        <label for="username">Username</label>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            value="{{ customer.get('username', customer.get('name', '')|lower|replace(' ', '')) }}"
+                            placeholder="Choose a username"
+                            maxlength="30"
+                            pattern="[A-Za-z0-9_.]+"
+                            title="Use letters, numbers, underscores or dots."
+                            required>
+                    </div>
+
+                    <div class="profile-field">
+                        <label for="email">Email Address</label>
+                        <input
+                            type="email"
+                            id="email"
+                            value="{{ customer.get('email', '') }}"
+                            readonly>
+                        <small>Your registered email cannot be changed here.</small>
+                    </div>
+
+                    <div class="profile-field">
+                        <label for="mobile">Mobile Number</label>
+                        <input
+                            type="tel"
+                            id="mobile"
+                            name="mobile"
+                            value="{{ customer.get('mobile', '') }}"
+                            placeholder="Enter 10-digit mobile number"
+                            inputmode="numeric"
+                            pattern="[0-9]{10}"
+                            maxlength="10"
+                            required>
+                    </div>
+
+                    <div class="profile-field profile-address">
+                        <label for="address">Delivery Address</label>
+                        <textarea
+                            id="address"
+                            name="address"
+                            rows="3"
+                            maxlength="300"
+                            placeholder="Enter your delivery address">{{ customer.get('address', '') }}</textarea>
+                    </div>
+
+                </div>
+
+                <div class="profile-actions">
+                    <button type="submit" class="save-profile-btn">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+
+                    <a href="{{ url_for('dashboard') }}"
+                       class="cancel-profile-btn">
+                        Cancel
+                    </a>
+                </div>
+
+            </form>
+
+        </section>
+
+        <div class="profile-shortcuts">
+            <a href="/orders">
+                <i class="fas fa-box"></i> My Orders
+            </a>
+
+            <a href="/my-bills">
+                <i class="fas fa-file-invoice-dollar"></i> My Bills
+            </a>
+        </div>
+
+    </main>
+
+</body>
+</html>

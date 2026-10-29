@@ -1,27 +1,19 @@
+import os
 from pymongo import MongoClient
 
-client = MongoClient("mongodb://localhost:27017/")
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
+
+client = MongoClient(MONGO_URI)
 
 try:
     client.admin.command("ping")
     print("✅ MongoDB Connected Successfully!")
 except Exception as e:
-    print("❌ Error:", e)
-
-db = client["CoffeeShop"]
-users = db["users"]
-coffees = db["coffees"]
-orders = db["orders"]
-
-from pymongo import MongoClient
-
-client = MongoClient("mongodb://localhost:27017/")
+    print("❌ MongoDB Error:", e)
 
 db = client["CoffeeShop"]
 
 users = db["users"]
 coffees = db["coffees"]
 orders = db["orders"]
-
-# NEW
 messages = db["messages"]

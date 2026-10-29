@@ -2,76 +2,130 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
     <title>Customer Messages</title>
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
 {% include "header.html" %}
 
+<div class="admin-page">
 
-<section class="admin-messages">
+    <h1>Customer Messages</h1>
 
-    <h1>☕ Customer Messages</h1>
+    <table class="admin-table">
 
-    <table class="message-table">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Message</th>
+                <th>Date and Time</th>
+            <th>Action</th>
+        
+        </tr>
 
-        <thead>
+        {% for message in messages %}
 
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Message</th>
-            </tr>
+        <tr>
+            <td>{{ message.get("name", "N/A") }}</td>
+            <td>{{ message.get("email", "N/A") }}</td>
+            <td>{{ message.get("message", "N/A") }}</td>
+<td>
+    {% if message.created_at %}
+        {{ message.created_at.strftime('%d-%m-%Y %I:%M %p') }}
+    {% else %}
+        Not recorded
+    {% endif %}
+</td>
 
-        </thead>
+       <td>
+    <button type="button"
+            class="delete-message-btn"
+            onclick="openDeletePopup('{{ message._id }}')">
+        Delete
+    </button>
+</td>
+        </tr>
 
-        <tbody>
-
-            {% for message in messages %}
-
-            <tr>
-
-                <td>
-                    {{ message.name }}
-                </td>
-
-                <td>
-                    {{ message.email }}
-                </td>
-
-                <td>
-                    {{ message.phone }}
-                </td>
-
-                <td>
-                    {{ message.message }}
-                </td>
-
-            </tr>
-
-            {% endfor %}
-
-        </tbody>
+        {% endfor %}
 
     </table>
 
-</section>
-
+</div>
 
 {% include "footer.html" %}
 
-</body>
+<div id="deletePopup" class="delete-popup">
 
+    <div class="delete-popup-box">
+
+        <div class="delete-icon">
+            ⚠️
+        </div>
+
+        <h2>Delete Message?</h2>
+
+        <p>Are you sure you want to delete this message?</p>
+
+        <p class="delete-warning">
+            This action cannot be undone.
+        </p>
+
+        <div class="delete-popup-actions">
+
+            <button type="button"
+                    class="cancel-delete-btn"
+                    onclick="closeDeletePopup()">
+                Cancel
+            </button>
+
+            <button type="button"
+                    class="confirm-delete-btn"
+                    onclick="confirmDeleteMessage()">
+                Delete
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let messageIdToDelete = null;
+
+function openDeletePopup(messageId) {
+
+    messageIdToDelete = messageId;
+
+    document.getElementById("deletePopup").style.display = "flex";
+}
+
+
+function closeDeletePopup() {
+
+    messageIdToDelete = null;
+
+    document.getElementById("deletePopup").style.display = "none";
+}
+
+
+function confirmDeleteMessage() {
+
+    if (messageIdToDelete) {
+
+        window.location.href =
+            "/admin/delete-message/" + messageIdToDelete;
+
+    }
+
+}
+
+</script>
+
+</body>
 </html>

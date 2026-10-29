@@ -21,45 +21,59 @@
 
     <h1>☕ Add New Coffee</h1>
 
-    <form method="POST" class="coffee-form">
+    <form method="POST"
+          action="/addcoffee"
+          enctype="multipart/form-data"
+          class="coffee-form">
 
-        <label>Coffee Name</label>
+        <!-- Coffee Name -->
+        <label for="name">Coffee Name</label>
 
         <input type="text"
+               id="name"
                name="name"
                placeholder="Enter coffee name"
                required>
 
 
-        <label>Category</label>
+        <!-- Category -->
+        <label for="category">Category</label>
 
         <input type="text"
+               id="category"
                name="category"
                placeholder="Example: Hot Coffee"
                required>
 
 
-        <label>Price</label>
+        <!-- Price -->
+        <label for="price">Price</label>
 
         <input type="number"
+               id="price"
                name="price"
                placeholder="Enter price"
                min="1"
                required>
 
 
-        <label>Image File Name</label>
+        <!-- Coffee Image -->
+        <label for="image">Coffee Photo</label>
 
-        <input type="text"
+        <input type="file"
+               id="image"
                name="image"
-               placeholder="Example: cappuccino.jpg"
+               accept="image/*"
                required>
 
 
+        <!-- Add Button -->
         <button type="submit" class="add-btn">
             ☕ Add Coffee
         </button>
 
+
+        <!-- Cancel -->
         <a href="/admin/coffees" class="cancel-btn">
             Cancel
         </a>

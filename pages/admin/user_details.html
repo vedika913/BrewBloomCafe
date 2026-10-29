@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Customer Details</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+{% include "header.html" %}
+
+<div class="admin-container">
+
+    <h1>👤 Customer Details</h1>
+
+    <!-- Customer Information -->
+    <div class="user-details-card">
+
+        <h2>Customer Information</h2>
+
+      <p>
+    <strong>User ID:</strong>
+    {{ user_number }}
+</p>
+
+        <p>
+            <strong>Name:</strong>
+            {{ user.get("name", "N/A") }}
+        </p>
+
+        <p>
+            <strong>Email:</strong>
+            {{ user.get("email", "N/A") }}
+        </p>
+
+        <p>
+            <strong>Mobile:</strong>
+            {{ user.get("mobile", "N/A") }}
+        </p>
+
+    </div>
+
+
+    <!-- Orders -->
+    <div class="table-box">
+
+        <h2>☕ Customer Orders</h2>
+
+        {% if orders %}
+
+        <table>
+
+            <tr>
+                <th>Coffee</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Status</th>
+            </tr>
+
+            {% for order in orders %}
+
+            <tr>
+
+                <td>
+                    {{ order.get("coffee_name", "N/A") }}
+                </td>
+
+                <td>
+                    {{ order.get("quantity", 1) }}
+                </td>
+
+                <td>
+                    ₹{{ order.get("price", 0) }}
+                </td>
+
+                <td>
+                    {{ order.get("status", "Pending") }}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        {% else %}
+
+        <p class="no-orders">
+            This customer has not placed any orders yet.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <br>
+
+    <a href="/admin/users" class="back-btn">
+        ← Back to Users
+    </a>
+
+</div>
+
+{% include "footer.html" %}
+
+</body>
+</html>

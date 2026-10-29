@@ -4,11 +4,12 @@
 <head>
 
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Admin Panel</title>
+    <title>Coffee Management</title>
 
     <link rel="stylesheet"
-    href="{{ url_for('static', filename='style.css') }}">
+          href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
@@ -27,46 +28,57 @@
     <table>
 
         <tr>
-
             <th>Image</th>
-
             <th>Name</th>
-
             <th>Category</th>
-
             <th>Price</th>
-
             <th>Action</th>
-
         </tr>
 
         {% for coffee in coffees %}
 
         <tr>
 
+            <!-- Image -->
             <td>
-
-                <img src="{{ url_for('static', filename='images/' + coffee.image) }}">
-
+                {% if coffee.image %}
+                    <img src="{{ url_for('static', filename='images/' + coffee.image) }}"
+                         alt="{{ coffee.name }}"
+                         width="80"
+                         height="80"
+                         style="object-fit: cover; border-radius: 8px;">
+                {% else %}
+                    No Image
+                {% endif %}
             </td>
 
-            <td>{{ coffee.name }}</td>
-
-            <td>{{ coffee.category }}</td>
-
-            <td>₹{{ coffee.price }}</td>
-
+            <!-- Name -->
             <td>
-
-                <a href="/editcoffee/{{ coffee._id }}">
-                    <button>Edit</button>
-                </a>
-
-                <a href="/deletecoffee/{{ coffee._id }}">
-                    <button class="delete-btn">Delete</button>
-                </a>
-
+                {{ coffee.name }}
             </td>
+
+            <!-- Category -->
+            <td>
+                {{ coffee.category }}
+            </td>
+
+            <!-- Price -->
+            <td>
+                ₹{{ coffee.price }}
+            </td>
+
+            <!-- Actions -->
+        <td class="coffee-actions">
+    <a href="/editcoffee/{{ coffee._id }}" class="edit-btn">
+        ✏️ Edit
+    </a>
+
+    <a href="/deletecoffee/{{ coffee._id }}"
+       class="delete-btn"
+       onclick="return confirm('Are you sure you want to delete this coffee?');">
+        🗑️ Delete
+    </a>
+</td>
 
         </tr>
 

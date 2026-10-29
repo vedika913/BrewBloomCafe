@@ -26,29 +26,28 @@
             <th>Action</th>
         </tr>
 
-        {% for user in users %}
+  {% for user in users %}
 
-        <tr>
+<tr>
 
-            <td>{{ loop.index }}</td>
+    <td>{{ loop.index }}</td>
 
-            <td>{{ user.name }}</td>
+    <td>{{ user.name }}</td>
 
-            <td>{{ user.email }}</td>
+    <td>{{ user.email }}</td>
 
-            <td>{{ user.mobile }}</td>
+    <td>{{ user.mobile }}</td>
 
-            <td>
+    <td>
+        <a href="/admin/user/{{ user._id }}?user_number={{ loop.index }}"
+           class="view-btn">
+            View
+        </a>
+    </td>
 
-                <a href="/admin/user/{{ user._id }}">
-                    <button class="view-btn">View</button>
-                </a>
+</tr>
 
-            </td>
-
-        </tr>
-
-        {% endfor %}
+{% endfor %}
 
     </table>
 

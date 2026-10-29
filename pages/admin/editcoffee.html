@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Coffee</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+{% include "header.html" %}
+
+<div class="admin-container">
+
+    <h1>☕ Edit Coffee</h1>
+
+    <form method="POST"
+          action="/editcoffee/{{ coffee._id }}"
+          enctype="multipart/form-data"
+          class="coffee-form">
+
+        <label for="name">Coffee Name</label>
+
+        <input type="text"
+               id="name"
+               name="name"
+               value="{{ coffee.name }}"
+               required>
+
+
+        <label for="category">Category</label>
+
+        <input type="text"
+               id="category"
+               name="category"
+               value="{{ coffee.category }}"
+               required>
+
+
+        <label for="price">Price</label>
+
+        <input type="number"
+               id="price"
+               name="price"
+               value="{{ coffee.price }}"
+               min="1"
+               required>
+
+
+        <label>Current Photo</label>
+
+        {% if coffee.image %}
+            <img src="{{ url_for('static', filename='images/' + coffee.image) }}"
+                 alt="{{ coffee.name }}"
+                 style="width:150px; height:150px; object-fit:cover; border-radius:10px; margin-bottom:15px;">
+        {% endif %}
+
+
+        <label for="image">Change Photo</label>
+
+        <input type="file"
+               id="image"
+               name="image"
+               accept="image/*">
+
+
+        <button type="submit" class="add-btn">
+            💾 Update Coffee
+        </button>
+
+        <a href="/admin/coffees" class="cancel-btn">
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+{% include "footer.html" %}
+
+</body>
+
+</html>  

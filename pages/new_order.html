@@ -1,217 +1,245 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Order | Brew & Bloom Cafe</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
-
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+    <style>
+        .coffee-row {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            background: #fffaf6;
+        }
+
+        .coffee-row label {
+            display: block;
+            margin: 10px 0 6px;
+            font-weight: 600;
+        }
+
+        .coffee-row select,
+        .coffee-row input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+        }
+
+        .coffee-row select {
+            margin-bottom: 5px;
+        }
+
+        .remove-coffee-btn {
+            margin-top: 12px;
+            padding: 9px 14px;
+            background: #b83232;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .add-coffee-btn {
+            margin: 10px 0 18px;
+            padding: 11px 15px;
+            background: #684638;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .order-total {
+            padding: 15px;
+            margin: 15px 0;
+            background: #f5eee8;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
-
 {% include "header.html" %}
 
-
 <div class="counter-order-page">
-
-    <h1>
-        <i class="fa-solid fa-mug-hot"></i>
-        New Counter Order
-    </h1>
-
+    <h1><i class="fa-solid fa-mug-hot"></i> New Counter Order</h1>
     <p class="page-subtitle">
-        Create an order for a customer at the cafe.
+        Create an order with multiple coffees.
     </p>
 
-
     <div class="counter-order-card">
+        <form action="/admin/new-order" method="POST"
+              onsubmit="return validateOrder()">
 
-        <form action="/admin/new-order" method="POST">
+            <label>Customer Name</label>
+            <input type="text" name="customer_name"
+                   placeholder="Enter customer name" required>
 
-
-            <!-- CUSTOMER NAME -->
-
-            <label>
-                Customer Name
-            </label>
-
-            <input
-                type="text"
-                name="customer_name"
-                placeholder="Enter customer name"
-                required
-            >
-
-
-            <!-- ORDER TYPE -->
-
-            <label>
-                Order Type
-            </label>
-
-            <select
-                name="order_type"
-                id="orderType"
-                onchange="toggleTable()"
-                required
-            >
-
-                <option value="Dine-in">
-                    Dine-in
-                </option>
-
-                <option value="Takeaway">
-                    Takeaway
-                </option>
-
+            <label>Order Type</label>
+            <select name="order_type" id="orderType"
+                    onchange="toggleTable()" required>
+                <option value="Dine-in">Dine-in</option>
+                <option value="Takeaway">Takeaway</option>
             </select>
-
-
-            <!-- TABLE -->
 
             <div id="tableBox">
-
-                <label>
-                    Table Number
-                </label>
-
-                <input
-                    type="text"
-                    name="table_number"
-                    placeholder="Example: 5"
-                >
-
+                <label>Table Number</label>
+                <input type="text" name="table_number"
+                       id="tableNumber" placeholder="Example: 5">
             </div>
 
+            <h3>Choose Coffee Items</h3>
 
-            <!-- COFFEE -->
+            <div id="coffeeRows">
+                <div class="coffee-row">
+                    <label>Select Coffee</label>
+                    <select name="coffee_id" class="coffee-select"
+                            onchange="calculateTotal()" required>
+                        <option value="" data-price="0">Select Coffee</option>
+                        {% for coffee in coffees %}
+                        <option value="{{ coffee._id }}"
+                                data-price="{{ coffee.price }}">
+                            {{ coffee.name }} - ₹{{ coffee.price }}
+                        </option>
+                        {% endfor %}
+                    </select>
 
-            <label>
-                Select Coffee
-            </label>
+                    <label>Quantity</label>
+                    <input type="number" name="quantity"
+                           class="coffee-quantity"
+                           min="1" value="1" required
+                           oninput="calculateTotal()">
 
-            <select
-                name="coffee_id"
-                required
-            >
+                    <p>Item total: ₹<span class="item-total">0.00</span></p>
+                    <button type="button" class="remove-coffee-btn"
+                            onclick="removeCoffee(this)" hidden>
+                        <i class="fa-solid fa-trash"></i> Remove
+                    </button>
+                </div>
+            </div>
 
-                <option value="">
-                    Select Coffee
-                </option>
-
-                {% for coffee in coffees %}
-
-                <option value="{{ coffee._id }}">
-
-                    {{ coffee.name }}
-                    - ₹{{ coffee.price }}
-
-                </option>
-
-                {% endfor %}
-
-            </select>
-
-
-            <!-- QUANTITY -->
-
-            <label>
-                Quantity
-            </label>
-
-            <input
-                type="number"
-                name="quantity"
-                min="1"
-                value="1"
-                required
-            >
-
-
-            <!-- PAYMENT -->
-
-            <label>
-                Payment Method
-            </label>
-
-            <select
-                name="payment_method"
-                required
-            >
-
-                <option value="Cash">
-                    Cash
-                </option>
-
-                <option value="UPI">
-                    UPI / PhonePe
-                </option>
-
-                <option value="Card">
-                    Card
-                </option>
-
-            </select>
-
-
-            <!-- BUTTON -->
-
-            <button
-                type="submit"
-                class="counter-order-btn">
-
-                <i class="fa-solid fa-check"></i>
-
-                Place Counter Order
-
+            <button type="button" class="add-coffee-btn"
+                    onclick="addCoffee()">
+                <i class="fa-solid fa-plus"></i> Add Another Coffee
             </button>
 
+            <div class="order-total">
+                Grand Total: ₹<span id="grandTotal">0.00</span>
+            </div>
 
+            <label>Payment Method</label>
+            <select name="payment_method" required>
+                <option value="Cash">Cash</option>
+                <option value="UPI">UPI / PhonePe</option>
+                <option value="Card">Card</option>
+            </select>
+
+            <button type="submit" class="counter-order-btn">
+                <i class="fa-solid fa-check"></i> Place Counter Order
+            </button>
         </form>
-
     </div>
-
 </div>
 
-
 <script>
-
 function toggleTable() {
+    const dineIn = document.getElementById("orderType").value === "Dine-in";
+    const tableBox = document.getElementById("tableBox");
+    const tableNumber = document.getElementById("tableNumber");
 
-    const orderType =
-        document.getElementById("orderType").value;
+    tableBox.style.display = dineIn ? "block" : "none";
+    tableNumber.required = dineIn;
 
-    const tableBox =
-        document.getElementById("tableBox");
-
-    if (orderType === "Dine-in") {
-
-        tableBox.style.display = "block";
-
-    } else {
-
-        tableBox.style.display = "none";
-
-    }
-
+    if (!dineIn) tableNumber.value = "";
 }
 
+function addCoffee() {
+    const rows = document.getElementById("coffeeRows");
+    const firstRow = rows.querySelector(".coffee-row");
+    const newRow = firstRow.cloneNode(true);
+
+    newRow.querySelector(".coffee-select").value = "";
+    newRow.querySelector(".coffee-quantity").value = 1;
+    newRow.querySelector(".item-total").textContent = "0.00";
+    newRow.querySelector(".remove-coffee-btn").hidden = false;
+
+    rows.appendChild(newRow);
+    calculateTotal();
+}
+
+function removeCoffee(button) {
+    const rows = document.querySelectorAll("#coffeeRows .coffee-row");
+
+    if (rows.length <= 1) {
+        alert("At least one coffee item is required.");
+        return;
+    }
+
+    button.closest(".coffee-row").remove();
+    calculateTotal();
+}
+
+function calculateTotal() {
+    let grandTotal = 0;
+
+    document.querySelectorAll("#coffeeRows .coffee-row").forEach(row => {
+        const select = row.querySelector(".coffee-select");
+        const quantityInput = row.querySelector(".coffee-quantity");
+
+        const price = Number(
+            select.selectedOptions[0]?.dataset.price || 0
+        );
+        const quantity = Math.max(0, Number(quantityInput.value) || 0);
+        const subtotal = price * quantity;
+
+        row.querySelector(".item-total").textContent = subtotal.toFixed(2);
+        grandTotal += subtotal;
+    });
+
+    document.getElementById("grandTotal").textContent =
+        grandTotal.toFixed(2);
+
+    document.querySelectorAll(".remove-coffee-btn").forEach(button => {
+        button.hidden =
+            document.querySelectorAll("#coffeeRows .coffee-row").length <= 1;
+    });
+}
+
+function validateOrder() {
+    const rows = document.querySelectorAll("#coffeeRows .coffee-row");
+
+    for (const row of rows) {
+        if (!row.querySelector(".coffee-select").value) {
+            alert("Please select a coffee for every row, or remove the unused row.");
+            return false;
+        }
+
+        const quantity = Number(row.querySelector(".coffee-quantity").value);
+        if (!Number.isInteger(quantity) || quantity < 1) {
+            alert("Each coffee quantity must be at least 1.");
+            return false;
+        }
+    }
+
+    return true;
+}
+
+toggleTable();
+calculateTotal();
 </script>
 
-
 {% include "footer.html" %}
-
 </body>
-
 </html>
