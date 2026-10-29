@@ -1,16 +1,18 @@
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from os import name
 from werkzeug.security import generate_password_hash, check_password_hash
 from bson import ObjectId
-from flask import Flask, render_template, request, redirect, session, abort
+from flask import Flask, app, render_template, request, redirect, session, abort
 from database import users, coffees, orders, messages
 from datetime import datetime
 
 
-
-
-app = Flask(__name__, template_folder="pages")
-app.secret_key = "CoffeeShopSecret123"
-
+import os
+app.secret_key = os.environ.get("SECRET_KEY")
 
 
     
